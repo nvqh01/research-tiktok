@@ -8,8 +8,8 @@ class Utils {
       host: 'tun.netsocks.io',
       port: 22225,
       auth: {
-        username: 'nts-customer-zp_390cebac-zone-residential_ben-country-BR',// `${config.proxy.username}`,
-        password: 'test' // config.proxy.password
+        username: config.proxy.username,
+        password: config.proxy.password
       }
     };
   
