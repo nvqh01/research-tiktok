@@ -1,4 +1,4 @@
-import Signer from './utils/signer.js';
+import Signer from './signer.js';
 
 const signer = new Signer(null, null);
 
