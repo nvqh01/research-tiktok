@@ -1,8 +1,7 @@
-# tiktok-web-reverse-engineering
-Tiktok Web Reverse Engineering X-Bogus &amp; X-Gnarly implementation
 # TikTok Signature Utility
 
 A lightweight utility to generate signed TikTok API request URLs using a headless navigator. Designed for environments requiring dynamic request signing with proper user-agent emulation.
+Tiktok Web Reverse Engineering X-Bogus &amp; X-Gnarly implementation
 
 ## ✨ Features
 
