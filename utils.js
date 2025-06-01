@@ -3,27 +3,6 @@
 import { HttpsProxyAgent } from 'https-proxy-agent';
 
 class Utils {
-  static proxy(country) {
-    const proxy = {
-      host: 'tun.netsocks.io',
-      port: 22225,
-      auth: {
-        username: config.proxy.username,
-        password: config.proxy.password
-      }
-    };
-  
-    // Construct proxy URL
-    const proxyUrl = `https://${proxy.auth.username}:${proxy.auth.password}@${proxy.host}:${proxy.port}`;
-  
-    // Create an instance of ProxyAgent with the proxy URL
-    // const httpsAgent = new HttpsProxyAgent(proxyUrl);
-     
-    const httpsAgent = new HttpsProxyAgent(`http://${proxy.auth.username}:${proxy.auth.password}@${proxy.host}:${proxy.port}`);
-
-    return { httpsAgent };
-  }
-
   static getRandomInt(a, b) {
     const min = Math.min(a, b);
     const max = Math.max(a, b);
