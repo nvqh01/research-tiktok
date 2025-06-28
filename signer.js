@@ -8,7 +8,7 @@ import path from 'path';
 import { fileURLToPath } from 'url';
 
 class Signer {
-  userAgent = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36';
+  userAgent = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36';
   args = [
     '--disable-blink-features',
     '--disable-blink-features=AutomationControlled',
@@ -105,17 +105,20 @@ class Signer {
         return window.generateBogus(params);
       }; */
 
-      window.generateSignature = function generateSignature(url, body) {
-        if (typeof window._yg[37] !== 'function') {
-          throw 'No X-Bogus/X-Gnarly function found';
+      window.generateXBogus = function generateXBogus(query, undf) {
+        if (typeof window.__tsign.u[870].v !== 'function') {
+          throw 'No X-Bogus function found';
         }
 
-        console.log({
-          yg37: window._yg[37],
-          url,
-          body
-        })
-        return window._yg[37](url, body);
+        return window.__tsign.u[870].v(query, undf);
+      };
+
+      window.generateXGnarly = function generateXGnarly(query, strBody) {
+        if (typeof window.__tsign.u[871].v !== 'function') {
+          throw 'No X-Gnarly function found';
+        }
+
+        return window.__tsign.u[871].v(query, strBody);
       };
 
       return this;
@@ -142,10 +145,21 @@ class Signer {
     return info;
   }
 
-  async Sign(url, body = '') {
-    
-    console.log('Sign', { e: url, t: body });
-    return await this.page.evaluate(`generateSignature('${url}', ${body})`);
+  async Sign(url, body = '', splited=false) {
+    // console.log('Sign', { e: url, t: body });
+
+    var query = new URL(url).search.slice(1); // removes the "?" from the start
+    const xGnarly = await this.page.evaluate(`generateXGnarly('${query}', ${body})`);
+
+    query = `${query}&X-Gnarly=${xGnarly}`
+
+    const xBogus = await this.page.evaluate(`generateXBogus('${query}', ${null})`);
+
+    if(splited){
+      return { signedUrl:`${url}&X-Gnarly=${xGnarly}&X-Bogus=${xBogus}`, xBogus, xGnarly }
+    }
+
+    return `${url}&X-Gnarly=${xGnarly}&X-Bogus=${xBogus}`
   }
 
   async signDepercated(link) {
@@ -155,7 +169,7 @@ class Signer {
     // let verify_fp = Utils.generateVerifyFp();
     // let newUrl = link + '&verifyFp=' + verify_fp;
 
-    let signature = await this.page.evaluate(`generateSignature('${link}')`);
+    let sginature = await this.page.evaluate(`generateSignature('${link}')`);
     let signedUrl = link + '&_signature=' + signature;
 
     let queryString = new URL(signedUrl).searchParams.toString();
