@@ -27,40 +27,6 @@ class Utils {
     return 'verify_' + n + '_' + r.join('');
   }
 
-  static extractCooks(headers) {
-    // Check if the headers contain the 'sessionid' cookie
-    const cookies = headers['set-cookie'] || [];
-  
-    // eslint-disable-next-line no-restricted-syntax
-    for (const cookie of cookies) {
-      const splited = cookie.split(';');
-      const name   = splited[0].split('=')[0];
-  
-      if (name === 'sessionid') {
-        const sessionId   = splited[0].split('=')[1];
-        const maxAgeSeconds = splited[3].split('=')[1];
-  
-        const currentDate = new Date();
-  
-        const maxAge = new Date(currentDate.getTime() + (parseInt(maxAgeSeconds, 10) * 1000));
-  
-        return { sessionId, maxAge };
-      }
-    }
-    return {};
-  }
-
-  static canRequestMore(requestedBefore) {
-    const currentTime = new Date();
-    const fiveMinutesAgo = new Date(currentTime.getTime() - 5 * 60 * 1000); // 5 minutes ago
-
-    // Filter requests made within the last 5 minutes
-    const recentRequests = requestedBefore.filter(item => new Date(item.createdAt) >= fiveMinutesAgo);
-
-    // Check if there have been fewer than 5 requests in the last 5 minutes
-    return recentRequests.length < 5;
-  }
-
   static generateDeviceId(length = 19) {
     let deviceId = '';
   
@@ -106,50 +72,6 @@ class Utils {
       screen_height: screen_height.toString(),
       screen_width: screen_width.toString()
     };
-  }
-
-  static processURL(url) {
-    // Normalize the URL to ensure consistency
-    if (url.includes('&amp;')) {
-      url = url.replace(/&amp;/g, '&');
-    }
-    
-    if (!url.startsWith('http://') && !url.startsWith('https://')) {
-      url = 'https://' + url;
-    }
-
-    const urlObj = new URL(url);
-
-    // 1) Check for TikTok share comment parameters
-    const shareAwemeId   = urlObj.searchParams.get('share_item_id');
-    const shareCommentId = urlObj.searchParams.get('share_comment_id');
-    if (shareAwemeId && shareCommentId) {
-      return {
-        kind:      'comment',
-        awemeId:   shareAwemeId,
-        commentId: shareCommentId
-      };
-    }
-
-    const pathParts = urlObj.pathname.split('/').filter(part => part);
-    
-    if (pathParts.length === 1 && pathParts[0].startsWith('@')) {
-      const username = pathParts[0].substring(1);
-      return { kind: 'profile', value: username };
-    }
-
-    console.log(pathParts)
-    if (pathParts.length >= 3 && pathParts[0].startsWith('@')) {
-      const username = pathParts[0].substring(1);
-      const contentType = pathParts[1];
-      const contentId = pathParts[2];
-
-      if ((contentType === 'video' || contentType === 'photo') && contentId) {
-        return { kind: 'post', username, value: contentId };
-      }
-    }
-
-    return { kind: 'unknown', value: null };
   }
 
   static parseCookies(cookieArray) {
