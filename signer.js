@@ -148,18 +148,19 @@ class Signer {
   async Sign(url, body = '', splited=false) {
     // console.log('Sign', { e: url, t: body });
 
-    var query = new URL(url).search.slice(1); // removes the "?" from the start
-    const xGnarly = await this.page.evaluate(`generateXGnarly('${query}', ${body})`);
+    const params = new URL(url).search.slice(1); // removes the "?" from the start
 
-    query = `${query}&X-Gnarly=${xGnarly}`
+    const xGnarly = await this.page.evaluate(`generateXGnarly('${params}', ${body})`);
 
-    const xBogus = await this.page.evaluate(`generateXBogus('${query}', ${null})`);
+    const xBogus = await this.page.evaluate(`generateXBogus('${params}', ${null})`);
+
+    // query = `${query}&X-Gnarly=${xGnarly}`
 
     if(splited){
       return { signedUrl:`${url}&X-Gnarly=${xGnarly}&X-Bogus=${xBogus}`, xBogus, xGnarly }
     }
 
-    return `${url}&X-Gnarly=${xGnarly}&X-Bogus=${xBogus}`
+    return `${url}&X-Bogus=${xBogus}&X-Gnarly=${xGnarly}`
   }
 
   async signDepercated(link) {
