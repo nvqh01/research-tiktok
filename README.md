@@ -1,5 +1,21 @@
 # TikTok Signature Utility
 
+> 🔐 **Private TikTok API Signing Tool with Live Chat Integration**
+
+A lightweight and powerful utility for generating signed TikTok API URLs using a headless browser. Perfect for scraping, automation, or proxy environments that require valid `X-Bogus` and `X-Gnarly` headers.  
+Built for developers working on high-frequency data pipelines and private TikTok API integrations.
+
+## 📡 TikTok Live Chat API Access
+
+Looking for deeper integration with TikTok?
+
+Join our **Discord** for access to our **TikTok Live Chat Private API connector** — a powerful signing service alternative to Euler's:
+
+👉 [https://discord.gg/YsYppxg392](https://discord.gg/YsYppxg392)
+
+---
+
+
 A lightweight utility to generate signed TikTok API request URLs using a headless navigator. Designed for environments requiring dynamic request signing with proper user-agent emulation.
 Tiktok Web Reverse Engineering X-Bogus &amp; X-Gnarly implementation
 
