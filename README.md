@@ -1,5 +1,8 @@
 # TikTok Signature Utility
 
+
+Free.
+
 > 🔐 **Private TikTok API Signing Tool with Live Chat Integration**
 
 A lightweight and powerful utility for generating signed TikTok API URLs using a headless browser. Perfect for scraping, automation, or proxy environments that require valid `X-Bogus` and `X-Gnarly` headers.  
