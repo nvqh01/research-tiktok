@@ -35,7 +35,7 @@ async function start(index) {
   appendFileSync(
     `reports/source/index_${index}.txt`,
     JSON.stringify(statistics, null, 2) +
-      "===============================================================\n\n"
+      "\n===============================================================\n\n"
   );
 }
 

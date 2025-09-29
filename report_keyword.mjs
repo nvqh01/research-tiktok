@@ -62,7 +62,7 @@ function getOptions(index) {
     case 1:
       {
         listProxies = [proxies[0]];
-        proxyPendingTimes = 60 * 1000;
+        proxyPendingTimes = 1 * 1000;
       }
       break;
 
