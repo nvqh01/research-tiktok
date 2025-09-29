@@ -5,6 +5,7 @@ import { gotScraping } from "got-scraping";
 import _ from "lodash";
 import moment from "moment";
 import axios from "axios";
+import { HttpsProxyAgent } from "https-proxy-agent";
 
 export async function sleep(ms) {
   return new Promise((resolve) => setTimeout(resolve, ms));
@@ -129,10 +130,9 @@ export class Worker {
 
   async process(input) {
     console.log(
-      `Process input "${input.input}"${
-        input.nextPageToken
-          ? ` with next page token "${input.nextPageToken}"`
-          : ""
+      `Process input "${input.input}"${input.nextPageToken
+        ? ` with next page token "${input.nextPageToken}"`
+        : ""
       }`
     );
     const { posts, nextPageToken, isBlocked = false } = await this.crawl(input);
@@ -199,7 +199,7 @@ export class Worker {
       if (
         this.options.maxProcessedRequests &&
         this.statistics.totalProcessedRequests >=
-          this.options.maxProcessedRequests
+        this.options.maxProcessedRequests
       ) {
         console.log("Exceed max total requests");
         break;
@@ -266,10 +266,9 @@ export class KeywordWorker extends Worker {
 
   async process(input) {
     console.log(
-      `Process input "${input.input}"${
-        input.nextPageToken
-          ? ` with next page token "${input.nextPageToken}"`
-          : ""
+      `Process input "${input.input}"${input.nextPageToken
+        ? ` with next page token "${input.nextPageToken}"`
+        : ""
       }`
     );
     const {
@@ -298,15 +297,22 @@ export class KeywordWorker extends Worker {
       search_id: response.headers["x-tt-logid"],
     };
   }
-
   async request(url, proxy) {
-    const config = {
-      method: "get",
-      maxBodyLength: Infinity,
-      url: url,
-      headers: this.options.headers,
-    };
-    return await axios.request(config);
+    try {
+      const config = {
+        method: "get",
+        maxBodyLength: Infinity,
+        url,
+        headers: this.options.headers || {},
+      };
+
+      config.httpsAgent = new HttpsProxyAgent(this.proxyManager.formatProxyUrl(proxy));
+
+      const response = await axios.request(config);
+      return response;
+    } catch (err) {
+      throw err;
+    }
   }
 
   async crawl(input) {
@@ -344,6 +350,10 @@ export class KeywordWorker extends Worker {
         this.proxyManager.markSuccessProxy(proxy);
 
         if (!this.isValidNextPageToken(nextPageToken)) {
+          return { posts, nextPageToken: null };
+        }
+
+        if (!posts.length) {
           return { posts, nextPageToken: null };
         }
 

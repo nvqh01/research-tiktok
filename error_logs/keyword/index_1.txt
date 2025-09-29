@@ -1,0 +1,30 @@
+Time: 2025-09-29T14:36:14.558Z --- Proxy: 196.18.175.36:12345:media2014:8983UHDk33455skdjfkj --- Error: Invalid URL
+Time: 2025-09-29T14:36:15.574Z --- Proxy: 196.18.175.36:12345:media2014:8983UHDk33455skdjfkj --- Error: Invalid URL
+Time: 2025-09-29T14:37:59.851Z --- Proxy: 196.18.175.36:12345:media2014:8983UHDk33455skdjfkj --- Error: Cannot read properties of undefined (reading 'x-ms-token')
+Time: 2025-09-29T14:38:01.333Z --- Proxy: 196.18.175.36:12345:media2014:8983UHDk33455skdjfkj --- Error: Client network socket disconnected before secure TLS connection was established
+Time: 2025-09-29T14:38:56.462Z --- Proxy: 154.16.69.191:12345:media2014:8983UHDk33455skdjfkj --- Error: Cannot read properties of undefined (reading 'x-ms-token')
+Time: 2025-09-29T14:39:15.767Z --- Proxy: 154.16.69.191:12345:media2014:8983UHDk33455skdjfkj --- Error: Cannot read properties of undefined (reading 'x-ms-token')
+Time: 2025-09-29T14:39:25.353Z --- Proxy: 154.16.69.191:12345:media2014:8983UHDk33455skdjfkj --- Error: Cannot read properties of undefined (reading 'x-ms-token')
+Time: 2025-09-29T14:48:55.813Z --- Proxy: 196.18.175.36:12345:media2014:8983UHDk33455skdjfkj --- Error: Client network socket disconnected before secure TLS connection was established
+Time: 2025-09-29T14:48:57.139Z --- Proxy: 196.18.175.36:12345:media2014:8983UHDk33455skdjfkj --- Error: Client network socket disconnected before secure TLS connection was established
+Time: 2025-09-29T14:48:58.692Z --- Proxy: 196.18.175.36:12345:media2014:8983UHDk33455skdjfkj --- Error: Client network socket disconnected before secure TLS connection was established
+Time: 2025-09-29T14:49:00.224Z --- Proxy: 196.18.175.36:12345:media2014:8983UHDk33455skdjfkj --- Error: Client network socket disconnected before secure TLS connection was established
+Time: 2025-09-29T14:49:01.747Z --- Proxy: 196.18.175.36:12345:media2014:8983UHDk33455skdjfkj --- Error: Client network socket disconnected before secure TLS connection was established
+Time: 2025-09-29T14:49:05.609Z --- Proxy: 196.18.175.36:12345:media2014:8983UHDk33455skdjfkj --- Error: Client network socket disconnected before secure TLS connection was established
+Time: 2025-09-29T14:49:07.097Z --- Proxy: 196.18.175.36:12345:media2014:8983UHDk33455skdjfkj --- Error: Client network socket disconnected before secure TLS connection was established
+Time: 2025-09-29T14:49:08.411Z --- Proxy: 196.18.175.36:12345:media2014:8983UHDk33455skdjfkj --- Error: Client network socket disconnected before secure TLS connection was established
+Time: 2025-09-29T14:49:09.705Z --- Proxy: 196.18.175.36:12345:media2014:8983UHDk33455skdjfkj --- Error: Client network socket disconnected before secure TLS connection was established
+Time: 2025-09-29T14:49:17.823Z --- Proxy: 196.18.175.36:12345:media2014:8983UHDk33455skdjfkj --- Error: Client network socket disconnected before secure TLS connection was established
+Time: 2025-09-29T14:49:19.115Z --- Proxy: 196.18.175.36:12345:media2014:8983UHDk33455skdjfkj --- Error: Client network socket disconnected before secure TLS connection was established
+Time: 2025-09-29T14:49:20.703Z --- Proxy: 196.18.175.36:12345:media2014:8983UHDk33455skdjfkj --- Error: Client network socket disconnected before secure TLS connection was established
+Time: 2025-09-29T14:49:23.212Z --- Proxy: 196.18.175.36:12345:media2014:8983UHDk33455skdjfkj --- Error: Client network socket disconnected before secure TLS connection was established
+Time: 2025-09-29T14:49:24.532Z --- Proxy: 196.18.175.36:12345:media2014:8983UHDk33455skdjfkj --- Error: Client network socket disconnected before secure TLS connection was established
+Time: 2025-09-29T14:49:25.844Z --- Proxy: 196.18.175.36:12345:media2014:8983UHDk33455skdjfkj --- Error: Client network socket disconnected before secure TLS connection was established
+Time: 2025-09-29T14:49:27.240Z --- Proxy: 196.18.175.36:12345:media2014:8983UHDk33455skdjfkj --- Error: Client network socket disconnected before secure TLS connection was established
+Time: 2025-09-29T14:49:28.763Z --- Proxy: 196.18.175.36:12345:media2014:8983UHDk33455skdjfkj --- Error: Client network socket disconnected before secure TLS connection was established
+Time: 2025-09-29T14:49:30.322Z --- Proxy: 196.18.175.36:12345:media2014:8983UHDk33455skdjfkj --- Error: Client network socket disconnected before secure TLS connection was established
+Time: 2025-09-29T14:49:31.628Z --- Proxy: 196.18.175.36:12345:media2014:8983UHDk33455skdjfkj --- Error: Client network socket disconnected before secure TLS connection was established
+Time: 2025-09-29T14:49:33.132Z --- Proxy: 196.18.175.36:12345:media2014:8983UHDk33455skdjfkj --- Error: Client network socket disconnected before secure TLS connection was established
+Time: 2025-09-29T14:49:34.654Z --- Proxy: 196.18.175.36:12345:media2014:8983UHDk33455skdjfkj --- Error: Client network socket disconnected before secure TLS connection was established
+Time: 2025-09-29T14:49:36.210Z --- Proxy: 196.18.175.36:12345:media2014:8983UHDk33455skdjfkj --- Error: Client network socket disconnected before secure TLS connection was established
+Time: 2025-09-29T14:49:37.749Z --- Proxy: 196.18.175.36:12345:media2014:8983UHDk33455skdjfkj --- Error: Client network socket disconnected before secure TLS connection was established
