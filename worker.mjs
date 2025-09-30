@@ -21,6 +21,7 @@ export class Worker {
 
     this.statistics = {
       processId: options.processId,
+      country: options.country,
       startAt: moment().unix(),
       endAt: moment().unix(),
       totalProcessedRequests: 0,
@@ -28,6 +29,8 @@ export class Worker {
       totalProxies: this.proxyManager.getTotal(),
       totalCrawledPosts: 0,
     };
+
+    this.ttwid = null;
   }
 
   async buildUrl(input, nextPageToken) {
@@ -51,9 +54,20 @@ export class Worker {
           throw new Error("Can not get proxy");
         }
 
-        const url = await this.buildUrl(input.input, input.nextPageToken);
+        // const result = await this.getTtwid(input.input);
+        // result && (this.ttwid = result.ttwid);
+
+        const url = await this.buildUrl(
+          input.input,
+          input.nextPageToken,
+          input.msToken
+        );
         // console.log(url);
         const response = await this.request(url, proxy);
+
+        const msToken = response.headers["x-ms-token"];
+        input.msToken = msToken;
+
         const status = response.statusCode;
         if (status !== 200) throw new Error(`Received status ${status}`);
 
@@ -87,6 +101,9 @@ export class Worker {
 
         if (errorMessage.includes("Body is empty")) {
           this.proxyManager.markBlokedProxy(proxy);
+          // await sleep(2 * 60 * 1000);
+          // const result = await this.getTtwid(input.input);
+          // result && (this.ttwid = result.ttwid);
           isBlocked = true;
         } else {
           this.proxyManager.markFailProxy(proxy);
@@ -111,6 +128,8 @@ export class Worker {
     this.statistics.endAt = moment().unix();
 
     return {
+      processId: this.statistics.processId,
+      country: this.statistics.country,
       start_at: moment(this.statistics.startAt * 1000).toISOString(),
       end_at: moment(this.statistics.endAt * 1000).toISOString(),
       total_times: this.statistics.endAt - this.statistics.startAt + " seconds",
@@ -121,6 +140,23 @@ export class Worker {
 
       proxy_statistics: this.proxyManager.getStatistics(),
     };
+  }
+
+  async getTtwid(input) {
+    try {
+      const url = `https://www.tiktok.com/@${input}`;
+      // console.log("url: " + url);
+      const response = await gotScraping(url);
+      const cookies = response.headers["set-cookie"];
+      let ttwid = cookies.find((cookie) => !!cookie.match(/^ttwid=/)) || null;
+      ttwid && (ttwid = ttwid.split(";")[0]);
+      const msToken = response.headers["x-ms-token"];
+      // console.log({ ttwid, msToken });
+      return { ttwid, msToken };
+    } catch (error) {
+      console.log("Fail to get ttwid, because of: " + error.stack);
+      return null;
+    }
   }
 
   isValidNextPageToken(nextPageToken) {
@@ -148,9 +184,15 @@ export class Worker {
   }
 
   async request(url, proxy) {
+    const headers = { ...this.options.headers };
+    this.ttwid && (headers.Cookie = this.ttwid);
+
     return await gotScraping(url, {
-      headers: this.options.headers,
+      headers,
       proxyUrl: this.proxyManager.formatProxyUrl(proxy),
+      timeout: {
+        request: 60000,
+      },
     });
   }
 
@@ -168,7 +210,7 @@ export class Worker {
     const xBogus = signBogus(
       queryString,
       body,
-      this.options.headers["user-agent"],
+      this.options.headers["user-agent"] || this.options.headers["User-Agent"],
       // config.browser.userAgent,
       Math.floor(Date.now() / 1000)
     );
@@ -177,7 +219,7 @@ export class Worker {
       queryString, // query string
       body, // POST body
       // config.browser.userAgent, // user-agent
-      this.options.headers["user-agent"],
+      this.options.headers["user-agent"] || this.options.headers["User-Agent"],
       0, // envcode
       "5.1.1" // version
     );
@@ -190,8 +232,8 @@ export class Worker {
   }
 
   async start() {
-    console.log("Total inputs: " + this.inputManager.getTotal());
-    console.log("Total proxies: " + this.proxyManager.getTotal());
+    // console.log("Total inputs: " + this.inputManager.getTotal());
+    // console.log("Total proxies: " + this.proxyManager.getTotal());
 
     let mustStopProcess = false;
 
@@ -387,8 +429,9 @@ export class SourceWorker extends Worker {
     super(options, inputManager, proxyManager);
   }
 
-  async buildUrl(input, nextPageToken) {
+  async buildUrl(input, nextPageToken, msToken) {
     const params = Object.assign({}, this.options.params);
+    msToken && (params.msToken = msToken);
     nextPageToken && (params.cursor = nextPageToken);
     params.secUid = input;
 
@@ -408,8 +451,12 @@ export class SourceWorker extends Worker {
 
   saveErrorLog(errorMessage, proxy) {
     appendFileSync(
-      `error_logs/source/index_${this.options.processId}.txt`,
-      `Time: ${moment().toISOString()} --- Proxy: ${proxy} --- Error: ${errorMessage}\n`
+      `error_logs/source/index_${
+        this.options.processId
+      }_${this.options.country.replace("-", "_")}.txt`,
+      `Time: ${moment().toISOString()} --- Proxy: ${proxy} --- Country: ${
+        this.options.country
+      } --- Error: ${errorMessage}\n`
     );
   }
 }
