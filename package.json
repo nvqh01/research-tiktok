@@ -76,9 +76,9 @@
     "update-browserslist-db": "^1.1.3",
     "uuid": "^13.0.0",
     "vali-date": "^1.0.0",
+    "workerpool": "^9.3.4",
     "wrappy": "^1.0.2"
   },
-  "devDependencies": {},
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },

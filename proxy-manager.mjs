@@ -32,6 +32,22 @@ export class ProxyManager {
     this.statistics[proxy].success_requests += 1;
   }
 
+  getProxyWithoutCache() {
+    if (this.index >= this.listProxies.length) this.index = 0;
+    const proxy = this.listProxies[this.index++ % this.listProxies.length];
+
+    if (!this.statistics[proxy]) {
+      this.statistics[proxy] = {
+        total_requests: 0,
+        success_requests: 0,
+        fail_requests: 0,
+        blocked_requests: 0,
+      };
+    }
+
+    return proxy;
+  }
+
   getProxy() {
     if (this.index >= this.listProxies.length) this.index = 0;
     const proxy = this.listProxies[this.index++ % this.listProxies.length];
